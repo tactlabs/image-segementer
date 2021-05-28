@@ -12,20 +12,18 @@ import numpy as np
 
 
 def add_background(img_url,bg_url):
-    
-    
 
-    # img = Image.open('templates/background.png')
-    img = Image.open(requests.get(img_url, stream=True).raw)
+    img = Image.open('static/image.png')
+    # img = Image.open(requests.get(img_url, stream=True).raw)
     # plt.imshow(img); 
     # plt.show()
 
     rgb_img = img.convert('RGB')
     new_image_resized = rgb_img.resize((224, 224))
 
-    new_image_resized.save('image_resized1.png')
+    new_image_resized.save('static/image_resized1.png')
 
-    img_resize = Image.open('image_resized1.png')
+    img_resize = Image.open('static/image_resized1.png')
     plt.imshow(img_resize)
     # plt.show()
 
@@ -100,7 +98,7 @@ def add_background(img_url,bg_url):
     plt.imshow(masked_image)
     # plt.show()
 
-    blur_img = cv2.imread('image_resized1.png')
+    blur_img = cv2.imread('static/image_resized1.png')
     blur = cv2.blur(blur_img,(5,5))
     # plt.subplot(121),plt.imshow(blur_img),plt.title('Original')
     # plt.xticks([]), plt.yticks([])
@@ -113,9 +111,9 @@ def add_background(img_url,bg_url):
     # plt.show()
 
     background1 = Image.fromarray(blur_rgb)
-    background1.save("space_background.png")
+    background1.save("static/space_background.jpg")
 
-    background_image = cv2.imread('space_background.png')
+    background_image = cv2.imread('static/space_background.jpg')
     background_image = cv2.cvtColor(background_image, cv2.COLOR_BGR2RGB)
     crop_background = background_image[0:514, 0:816]
 
@@ -128,15 +126,13 @@ def add_background(img_url,bg_url):
 
     # img = Image.open(requests.get('https://image.similarpng.com/very-thumbnail/2020/08/Abstract-blue-wave-on-transparent-background-PNG.png', stream=True).raw)
 
-    
-
-    new_op = Image.open(requests.get(bg_url, stream=True).raw)
+    new_op = Image.open('static/background.jpg')
     rgb_new = new_op.convert('RGB')
     new_image_bg = rgb_new.resize((224, 224))
 
-    new_image_bg.save('image_resized_bg.png')
+    new_image_bg.save('static/image_resized_bg.png')
 
-    background_image_new = cv2.imread('image_resized_bg.png')
+    background_image_new = cv2.imread('static/image_resized_bg.png')
     background_image_new = cv2.cvtColor(background_image_new, cv2.COLOR_BGR2RGB)
     crop_background_new = background_image_new[0:514, 0:816]
 
@@ -146,10 +142,9 @@ def add_background(img_url,bg_url):
     complete_image_newbg = masked_image + crop_background_new
     # complete_image_newbg.save('complete_image_newbg.png')
     complete_image_newbg = cv2.cvtColor(complete_image_newbg, cv2.COLOR_BGR2RGB)
-    cv2.imwrite('complete_image_newbg.png',complete_image_newbg)
+    cv2.imwrite('static/complete_image_newbg.jpg',complete_image_newbg)
     # plt.imshow(complete_image_newbg)
     # plt.show()
-
 
 if __name__ == "__main__":
     add_background(0,0)
