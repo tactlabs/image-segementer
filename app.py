@@ -15,7 +15,7 @@ PORT = 3000
 
 app.config["UPLOAD_FOLDER"] = "uploads"
   
-@app.route("/2")
+@app.route("/")
 def home_view():
 
     return render_template ('index.html')

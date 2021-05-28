@@ -23,7 +23,7 @@ def add_background(img_url,bg_url):
     rgb_img = img.convert('RGB')
     new_image_resized = rgb_img.resize((224, 224))
 
-    new_image_resized.save('image_resized1.png')
+    # new_image_resized.save('image_resized1.png')
 
     img_resize = Image.open('image_resized1.png')
     plt.imshow(img_resize)
@@ -113,7 +113,7 @@ def add_background(img_url,bg_url):
     # plt.show()
 
     background1 = Image.fromarray(blur_rgb)
-    background1.save("space_background.png")
+    # background1.save("space_background.png")
 
     background_image = cv2.imread('space_background.png')
     background_image = cv2.cvtColor(background_image, cv2.COLOR_BGR2RGB)
@@ -134,7 +134,7 @@ def add_background(img_url,bg_url):
     rgb_new = new_op.convert('RGB')
     new_image_bg = rgb_new.resize((224, 224))
 
-    new_image_bg.save('image_resized_bg.png')
+    # new_image_bg.save('image_resized_bg.png')
 
     background_image_new = cv2.imread('image_resized_bg.png')
     background_image_new = cv2.cvtColor(background_image_new, cv2.COLOR_BGR2RGB)
