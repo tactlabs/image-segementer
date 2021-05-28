@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>imagio</title>
-    <style>
-    h1   {color: white;}
-    h2  {color: white;}
-    label {color: white;}
-</style>
-    
+    <!-- <style>
+        body{
+            background-color: whitesmoke;
+        }
+        h1 {
+            color: cyan;
+        }
+
+        h2 {
+            color: cyan;
+        }
+
+        label {
+            color: cyan;
+        }
+    </style> -->
+
 </head>
+
 <body>
-<style>
-body{
-    background-image:url('background.jpg');
-}
-</style>
-    <center>
-    <h1> welcome </h1>
-    <h2> give the url of image as input</h2>
-    <form action="">
-    <label for="homepage">Paste the url:</label>
-    <input type="url" id="homepage" name="homepage"><br><br>
-    
-    <h2> give the url of background image as input</h2>
-    <form action="">
-    <label for="homepage_background ">Paste the url:</label>
-    <input type="url" id="homepage_background" name="homepage_background"><br><br>
-    <input type="submit">
-</form>
-    </center>
+    <form action="/create" method="post">
+        <label for="img_url">Image URL paste pannunga</label><br>
+        <input type="text" name="img_url" placeholder="Paste link here"><br>
+        <label for="bg_url">BG URL thaanga</label><br>
+        <input type="text" name="bg_url" placeholder="Paste link here"><br>
+        <input type="submit" value="Submit">
+    </form>
 </body>
+
 </html>
