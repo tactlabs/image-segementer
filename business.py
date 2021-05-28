@@ -10,13 +10,9 @@ import numpy as np
 # img_url = 'https://ucscgenomics.soe.ucsc.edu/wp-content/uploads/Screen-Shot-2019-09-03-at-11.27.12-AM.png'
 # bg_url = 'https://image.similarpng.com/very-thumbnail/2020/08/Abstract-blue-wave-on-transparent-background-PNG.png'
 
-
 def add_background(img_url,bg_url):
 
     img = Image.open('static/image.png')
-    # img = Image.open(requests.get(img_url, stream=True).raw)
-    # plt.imshow(img); 
-    # plt.show()
 
     rgb_img = img.convert('RGB')
     new_image_resized = rgb_img.resize((224, 224))
@@ -25,7 +21,6 @@ def add_background(img_url,bg_url):
 
     img_resize = Image.open('static/image_resized1.png')
     plt.imshow(img_resize)
-    # plt.show()
 
     fcn = models.segmentation.fcn_resnet101(pretrained=True).eval()
 
@@ -71,7 +66,6 @@ def add_background(img_url,bg_url):
 
     rgb = decode_segmap(om)
     plt.imshow(rgb)
-    # plt.show()
 
     #The pyrUp() function increases the size to double of its original
     #size and pyrDown​() function decreases the size to half
@@ -87,28 +81,19 @@ def add_background(img_url,bg_url):
     img_rgb = cv2.pyrUp(img_small)
 
     plt.imshow(img_rgb)
-    # plt.show()
 
     mask = img_rgb
     plt.imshow(mask)
-    # plt.show()
 
     masked_image = np.copy(img_resize)
     masked_image[mask !=0] = [0]
     plt.imshow(masked_image)
-    # plt.show()
 
     blur_img = cv2.imread('static/image_resized1.png')
     blur = cv2.blur(blur_img,(5,5))
-    # plt.subplot(121),plt.imshow(blur_img),plt.title('Original')
-    # plt.xticks([]), plt.yticks([])
-    # plt.subplot(122),plt.imshow(blur),plt.title('Blurred')
-    # plt.xticks([]), plt.yticks([])
-    # plt.show()
 
     blur_rgb = cv2.cvtColor(blur, cv2.COLOR_BGR2RGB)
     plt.imshow(blur_rgb)
-    # plt.show()
 
     background1 = Image.fromarray(blur_rgb)
     background1.save("static/space_background.jpg")
@@ -122,9 +107,6 @@ def add_background(img_url,bg_url):
 
     complete_image = masked_image + crop_background
     plt.imshow(complete_image)
-    # plt.show()
-
-    # img = Image.open(requests.get('https://image.similarpng.com/very-thumbnail/2020/08/Abstract-blue-wave-on-transparent-background-PNG.png', stream=True).raw)
 
     new_op = Image.open('static/background.jpg')
     rgb_new = new_op.convert('RGB')
@@ -140,11 +122,8 @@ def add_background(img_url,bg_url):
     plt.imshow(crop_background_new)
 
     complete_image_newbg = masked_image + crop_background_new
-    # complete_image_newbg.save('complete_image_newbg.png')
     complete_image_newbg = cv2.cvtColor(complete_image_newbg, cv2.COLOR_BGR2RGB)
     cv2.imwrite('static/complete_image_newbg.jpg',complete_image_newbg)
-    # plt.imshow(complete_image_newbg)
-    # plt.show()
 
 if __name__ == "__main__":
     add_background(0,0)

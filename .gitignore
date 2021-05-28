@@ -1,9 +1,11 @@
 __pycache__/
 
-complete_image_newbg.png
+complete_image_newbg.jpg
+
+.vscode/
 
 image_resized_bg.png
 
 image_resized1.png
 
-space_background.png
+space_background.jpg
