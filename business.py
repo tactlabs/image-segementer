@@ -10,9 +10,9 @@ import numpy as np
 # img_url = 'https://ucscgenomics.soe.ucsc.edu/wp-content/uploads/Screen-Shot-2019-09-03-at-11.27.12-AM.png'
 # bg_url = 'https://image.similarpng.com/very-thumbnail/2020/08/Abstract-blue-wave-on-transparent-background-PNG.png'
 
-def add_background(img_url,bg_url):
+def add_background(img_url):
 
-    img = Image.open('static/image.png')
+    img = Image.open('static/'+img_url)
 
     rgb_img = img.convert('RGB')
     new_image_resized = rgb_img.resize((224, 224))
