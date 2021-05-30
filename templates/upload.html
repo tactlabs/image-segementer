@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='img/brand/logo.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Icons -->
+
+    <link href="{{ url_for('static', filename='js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='css/argon-dashboard.css') }}" rel="stylesheet" />
+    <title>Image</title>
+    <script type="text/javascript" src="{{url_for('static', filename='js/papaparse.min.js')}}"></script>
+</head>
+
+<style>
+   
+.drop-zone {
+  max-width: 600px;
+  height: 300px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: #cccccc;
+  border: 4px dashed #009578;
+  border-radius: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #cccccc;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+</style>
+
+<body class="">
+
+    <div class="main-content" >
+        <!-- Navbar -->
+        <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main"  >
+            <div class="container-fluid">
+                <!-- Brand -->
+                <p class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+                    Image
+                </p>
+                <!-- Form -->
+
+                <!-- User -->
+
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <!-- Header -->
+        <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8" >
+            <div class="container-fluid">
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt--7">
+            <!-- Form -->
+            <div class="row">
+
+                <div class="col-xl-12 order-xl-1">
+
+                    <div class="card bg-secondary shadow">
+
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Effect for image</h3>
+                                </div>
+                                <div class="col-4 text-right">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body" >
+                            <form action="/" method="POST" enctype="multipart/form-data">
+
+                                <div class="ml-5 mt-2 mb-4">
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <label for="dataset">Image</label>
+                            
+                                            <div class="drop-zone">
+                                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                <input id="dataset" type="file" name="dataset" class="drop-zone__input" onclick="data_query()">
+                                            </div>
+                                            <!--<button id="btn-upload-csv">Read CSV</button>-->
+                                        </div>
+                                        <br><br>
+                                        
+                                        <!-- <input type="file" accept=".csv" id="dataset" name="dataset" onclick="data_query()"></div> -->
+                                
+
+                                    </div>
+                                </div>
+
+
+                                 
+                                 
+
+                                <hr class="my-4" />
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary my-4">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <br><br> 
+
+   
+<script>
+    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+    const dropZoneElement = inputElement.closest(".drop-zone");
+    
+    dropZoneElement.addEventListener("click", (e) => {
+        inputElement.click();
+    });
+    
+    inputElement.addEventListener("change", (e) => {
+        if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+        }
+    });
+    
+    dropZoneElement.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZoneElement.classList.add("drop-zone--over");
+    });
+    
+    ["dragleave", "dragend"].forEach((type) => {
+        dropZoneElement.addEventListener(type, (e) => {
+        dropZoneElement.classList.remove("drop-zone--over");
+        });
+    });
+    
+    dropZoneElement.addEventListener("drop", (e) => {
+        e.preventDefault();
+    
+        if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+        }
+    
+        dropZoneElement.classList.remove("drop-zone--over");
+    });
+    });
+
+              function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+</script>
+
+<script>
+    function data_query(myFile){
+
+
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+    const dropZoneElement = inputElement.closest(".drop-zone");
+  
+    dropZoneElement.addEventListener("click", (e) => {
+      inputElement.click();
+    });
+  
+    inputElement.addEventListener("change", (e) => {
+      if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+      }
+    });
+  
+    dropZoneElement.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZoneElement.classList.add("drop-zone--over");
+    });
+  
+    ["dragleave", "dragend"].forEach((type) => {
+      dropZoneElement.addEventListener(type, (e) => {
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
+    });
+  
+    dropZoneElement.addEventListener("drop", (e) => {
+      e.preventDefault();
+  
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      }
+  
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+  }
+</script>
+<!-- 
+<script>
+    function deleteRow(row) {
+	var i = row.parentNode.parentNode.rowIndex;
+	document.getElementById('tblInputs').deleteRow(i);
+  document.getElementById('rowscount') = len;
+  return false;
+	}
+
+
+	function addRow() {
+			var x = document.getElementById('tblInputs');
+
+      var tbody = document.createElement('tbody');
+      x.appendChild(tbody);
+
+			var new_row = x.rows[1].cloneNode(true);
+			var len = x.rows.length;
+			new_row.cells[0].innerHTML = len;
+      document.getElementById('rowscount').value = len;
+      document.getElementById('columnscount').value = x.rows[0].cells.length;
+
+			var inp1 = new_row.cells[1].getElementsByTagName('input')[0];
+			inp1.id = "txtrow"+len+"[]";
+      inp1.name = inp1.id;
+			inp1.value = '';
+        
+        /*
+			var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
+			inp2.id ="txtrow"+len+"[]";
+      inp2.name = inp2.id;
+			inp2.value = '';
+
+      var inp3 = new_row.cells[3].getElementsByTagName('input')[0];
+			inp3.id ="txtrow"+len+"[]";
+      inp3.name = inp3.id;
+			inp3.value = '';
+        */
+
+			tbody.appendChild(new_row);
+      inp1.focus();
+      return false;
+	}
+  function setFocus()
+  {
+      document.getElementById("txtrow1_Col1").focus();
+  }
+</script>
+ -->
+
+
+
+  
+</body>
+
+
+</html>

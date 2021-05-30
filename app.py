@@ -24,11 +24,13 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        print("here")
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
+        print(file)
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
@@ -40,21 +42,7 @@ def upload_file():
             img_url = filename
             business.add_background(img_url)
             return render_template('index.html')
-    return '''
-    <!doctype html>
-    <html>
-    <head>
-        <title>Image Upload</title>
-    </head>
-    <body>
-        <h1>Image Upload</h1>
-        <form method="POST" action="" enctype="multipart/form-data">
-        <p><input type="file" name="file"></p>
-        <p><input type="submit" value="Submit"></p>
-        </form>
-    </body>
-    </html>
-    '''
+    return render_template('upload.html')
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0")
